@@ -1,0 +1,32 @@
+{
+  "name": "ckb-transaction-dumper",
+  "version": "0.1.0",
+  "description": "CKB Transaction Dumper, used together with ckb-standalone-debugger",
+  "bin": {
+    "ckb-transaction-dumper": "./cli-dist.js"
+  },
+  "files": [
+    "cli-dist.js"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "fmt": "prettier --write \"*.js\"",
+    "update-extension-file": "curl -LO https://raw.githubusercontent.com/nervosnetwork/ckb/27c36a55e6358fd04153ec3da4638b6e10660da6/util/types/schemas/extensions.mol && curl -LO https://raw.githubusercontent.com/nervosnetwork/ckb/27c36a55e6358fd04153ec3da4638b6e10660da6/util/types/schemas/blockchain.mol && moleculec --language - --schema-file extensions.mol --format json > extensions.json && moleculec-es -inputFile extensions.json -outputFile extensions.esm.js && rm blockchain.mol extensions.mol extensions.json"
+  },
+  "author": "Xuejie Xiao",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-json": "^4.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-replace": "^2.3.1",
+    "builtin-modules": "^3.1.0",
+    "ckb-js-toolkit": "^0.8.0",
+    "commander": "^5.0.0",
+    "encoding": "^0.1.12",
+    "prettier": "1.19.1",
+    "rollup": "^1.32.0",
+    "rollup-plugin-executable": "^1.5.2",
+    "rollup-plugin-terser": "^5.2.0"
+  }
+}
