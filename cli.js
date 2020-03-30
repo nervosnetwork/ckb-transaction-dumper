@@ -31,7 +31,8 @@ program
     "-o, --output <output file>",
     "Output file containing dumped tx",
     "dump.json"
-  );
+  )
+  .option("-p, --pretty-print", "Pretty print result file");
 program.parse(argv);
 
 const run = async () => {
@@ -56,7 +57,10 @@ const run = async () => {
   const dumper = new TransactionDumper(rpc, {
     depGroupUnpacker: outPointsUnpacker
   });
-  const data = await dumper.dump(tx);
+  let data = await dumper.dump(tx);
+  if (program.prettyPrint) {
+    data = JSON.stringify(JSON.parse(data), null, 2);
+  }
   writeFileSync(program.output, data);
 };
 
