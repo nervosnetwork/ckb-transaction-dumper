@@ -24,7 +24,7 @@ program
   .option("-r, --rpc <rpc>", "CKB RPC URL", "http://127.0.0.1:8114")
   .option("-t, --tx <tx>", "TX file to read, use STDIN if omitted")
   .option(
-    "-h, --tx-hash <tx-hash>",
+    "-x, --tx-hash <tx-hash>",
     "TX hash to load, when both present, this take precedence over --tx"
   )
   .option(
