@@ -11,6 +11,7 @@
   "scripts": {
     "build": "rollup -c",
     "fmt": "prettier --write \"*.js\"",
+    "prepare": "npm run build",
     "update-extension-file": "curl -LO https://raw.githubusercontent.com/nervosnetwork/ckb/27c36a55e6358fd04153ec3da4638b6e10660da6/util/types/schemas/extensions.mol && curl -LO https://raw.githubusercontent.com/nervosnetwork/ckb/27c36a55e6358fd04153ec3da4638b6e10660da6/util/types/schemas/blockchain.mol && moleculec --language - --schema-file extensions.mol --format json > extensions.json && moleculec-es -inputFile extensions.json -outputFile extensions.esm.js && rm blockchain.mol extensions.mol extensions.json"
   },
   "author": "Xuejie Xiao",
