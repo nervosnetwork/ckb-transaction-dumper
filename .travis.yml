@@ -50,7 +50,7 @@ matrix:
         - mkdir -p releases
         - npx pkg -t node12.13.1-osx-x64 cli-dist.js -o ckb-transaction-dumper
         - tar czf releases/$REL_PKG ckb-transaction-dumper README.md LICENSE
-    - name: Package for linux
+    - name: Package for windows
       if: 'tag IS present'
       os: linux
       dist: bionic
@@ -59,3 +59,12 @@ matrix:
         - mkdir -p releases
         - npx pkg -t node12.13.1-win-x64 cli-dist.js -o ckb-transaction-dumper.exe
         - tar czf releases/$REL_PKG ckb-transaction-dumper.exe README.md LICENSE
+    - name: Package node script
+      if: 'tag IS present'
+      os: linux
+      dist: bionic
+      env: REL_PKG=ckb-transaction-dumper_${TRAVIS_TAG}_node_executable_script.tar.gz
+      script:
+        - mkdir -p releases
+        - cp cli-dist.js ckb-transaction-dumper
+        - tar czf releases/$REL_PKG ckb-transaction-dumper README.md LICENSE
