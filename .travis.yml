@@ -13,7 +13,7 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
-      condition: '$TRAVIS_OS_NAME = linux && "$REL_PKG" != ""'
+      condition: $REL_PKG != ""
     api_key: "$GITHUB_TOKEN"
     file:
       - "releases/${REL_PKG}"
@@ -33,7 +33,7 @@ matrix:
         - npm run build
         - git diff --exit-code
     - name: Package for linux
-      if: 'tag IS present AND env(GITHUB_TOKEN) IS present'
+      if: 'tag IS present'
       os: linux
       dist: bionic
       env: REL_PKG=ckb-transaction-dumper_$TRAVIS_TAG_linux_x86_64.tar.gz
@@ -42,7 +42,7 @@ matrix:
         - npx pkg -t node12.13.1-linux-x64 cli-dist.js -o ckb-transaction-dumper
         - tar czf releases/$REL_PKG ckb-transaction-dumper README.md LICENSE
     - name: Package for osx
-      if: 'tag IS present AND env(GITHUB_TOKEN) IS present'
+      if: 'tag IS present'
       os: linux
       dist: bionic
       env: REL_PKG=ckb-transaction-dumper_$TRAVIS_TAG_darwin_x86_64.tar.gz
@@ -51,7 +51,7 @@ matrix:
         - npx pkg -t node12.13.1-osx-x64 cli-dist.js -o ckb-transaction-dumper
         - tar czf releases/$REL_PKG ckb-transaction-dumper README.md LICENSE
     - name: Package for linux
-      if: 'tag IS present AND env(GITHUB_TOKEN) IS present'
+      if: 'tag IS present'
       os: linux
       dist: bionic
       env: REL_PKG=ckb-transaction-dumper_$TRAVIS_TAG_windows_x86_64.tar.gz
