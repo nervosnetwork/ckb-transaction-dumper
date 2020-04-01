@@ -27,11 +27,6 @@ matrix:
         - npm run fmt
         - npm run build
         - git diff --exit-code
-    - name: Build on osx
-      os: osx
-      script:
-        - npm run build
-        - git diff --exit-code
     - name: Package for linux
       if: 'tag IS present'
       os: linux
