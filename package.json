@@ -1,6 +1,6 @@
 {
   "name": "ckb-transaction-dumper",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "CKB Transaction Dumper, used together with ckb-standalone-debugger",
   "bin": {
     "ckb-transaction-dumper": "./cli-dist.js"
@@ -25,6 +25,7 @@
     "ckb-js-toolkit": "^0.8.0",
     "commander": "^5.0.0",
     "encoding": "^0.1.12",
+    "pkg": "^4.4.5",
     "prettier": "1.19.1",
     "rollup": "^1.32.0",
     "rollup-plugin-executable": "^1.5.2",
