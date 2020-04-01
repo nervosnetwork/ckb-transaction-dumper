@@ -36,7 +36,7 @@ matrix:
       if: 'tag IS present'
       os: linux
       dist: bionic
-      env: REL_PKG=ckb-transaction-dumper_$TRAVIS_TAG_linux_x86_64.tar.gz
+      env: REL_PKG=ckb-transaction-dumper_${TRAVIS_TAG}_linux_x86_64.tar.gz
       script:
         - mkdir -p releases
         - npx pkg -t node12.13.1-linux-x64 cli-dist.js -o ckb-transaction-dumper
@@ -45,7 +45,7 @@ matrix:
       if: 'tag IS present'
       os: linux
       dist: bionic
-      env: REL_PKG=ckb-transaction-dumper_$TRAVIS_TAG_darwin_x86_64.tar.gz
+      env: REL_PKG=ckb-transaction-dumper_${TRAVIS_TAG}_darwin_x86_64.tar.gz
       script:
         - mkdir -p releases
         - npx pkg -t node12.13.1-osx-x64 cli-dist.js -o ckb-transaction-dumper
@@ -54,7 +54,7 @@ matrix:
       if: 'tag IS present'
       os: linux
       dist: bionic
-      env: REL_PKG=ckb-transaction-dumper_$TRAVIS_TAG_windows_x86_64.tar.gz
+      env: REL_PKG=ckb-transaction-dumper_${TRAVIS_TAG}_windows_x86_64.tar.gz
       script:
         - mkdir -p releases
         - npx pkg -t node12.13.1-win-x64 cli-dist.js -o ckb-transaction-dumper.exe
