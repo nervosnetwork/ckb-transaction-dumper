@@ -1,0 +1,23 @@
+name: Node.js Package
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+
+jobs:
+  linux-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm install
+      - run: npm run build
+      - run: npx pkg --options "no-warnings" -t node18-linux-x64 cli-dist.js -o ckb-transaction-dumper
+      - run: tar czf ckb-transaction-dumper_${{  github.ref_name }}_linux_x86_64.tar.gz ckb-transaction-dumper README.md LICENSE
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ckb-transaction-dumper_${{  github.ref_name }}_linux_x86_64.tar.gz
