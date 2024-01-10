@@ -3,7 +3,9 @@ import { OutPointVec } from "./extensions.esm";
 import { version } from "./package.json";
 import { Command } from "commander";
 import { createReadStream, writeFileSync } from "fs";
-import { argv, stdin } from "process";
+import { stdin } from "process";
+import { default as nodeFetch } from "node-fetch";
+import { ProxyAgent } from "proxy-agent";
 
 function outPointsUnpacker(data) {
   const vec = new OutPointVec(data);
@@ -12,7 +14,7 @@ function outPointsUnpacker(data) {
     const item = vec.indexAt(i);
     results.push({
       tx_hash: new Reader(item.getTxHash().raw()).serializeJson(),
-      index: "0x" + BigInt(item.getIndex().toLittleEndianUint32()).toString(16)
+      index: "0x" + BigInt(item.getIndex().toLittleEndianUint32()).toString(16),
     });
   }
   return results;
@@ -25,27 +27,36 @@ program
   .option("-t, --tx <tx>", "TX file to read, use STDIN if omitted")
   .option(
     "-x, --tx-hash <tx-hash>",
-    "TX hash to load, when both present, this take precedence over --tx"
+    "TX hash to load, when both present, this take precedence over --tx",
   )
   .option(
     "-o, --output <output file>",
     "Output file containing dumped tx",
-    "dump.json"
+    "dump.json",
   )
-  .option("-p, --pretty-print", "Pretty print result file");
-program.parse(argv);
+  .option("-p, --pretty-print", "Pretty print result file")
+  .option("-n, --no-proxy", "Disable proxies");
+program.parse();
+const options = program.opts();
 
 const run = async () => {
-  const rpc = new RPC(program.rpc, {}, global.fetch);
+  let fetchImpl = nodeFetch;
+  if (options.proxy) {
+    const agent = new ProxyAgent();
+    fetchImpl = (resource, options) => {
+      return nodeFetch(resource, Object.assign({}, options, { agent }));
+    };
+  }
+  const rpc = new RPC(options.rpc, {}, fetchImpl);
 
   let tx;
-  if (program.txHash) {
-    tx = (await rpc.get_transaction(program.txHash)).transaction;
+  if (options.txHash) {
+    tx = (await rpc.get_transaction(options.txHash)).transaction;
     delete tx.hash;
   } else {
     let s = stdin;
-    if (program.tx) {
-      s = createReadStream(program.tx);
+    if (options.tx) {
+      s = createReadStream(options.tx);
     }
     let result = "";
     for await (const chunk of s) {
@@ -55,13 +66,13 @@ const run = async () => {
   }
 
   const dumper = new TransactionDumper(rpc, {
-    depGroupUnpacker: outPointsUnpacker
+    depGroupUnpacker: outPointsUnpacker,
   });
   let data = await dumper.dump(tx);
-  if (program.prettyPrint) {
+  if (options.prettyPrint) {
     data = JSON.stringify(JSON.parse(data), null, 2);
   }
-  writeFileSync(program.output, data);
+  writeFileSync(options.output, data);
 };
 
 run();
