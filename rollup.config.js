@@ -2,7 +2,7 @@ import executable from "rollup-plugin-executable";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import builtins from "builtin-modules";
 
 module.exports = [
@@ -12,17 +12,19 @@ module.exports = [
       file: "cli-dist.js",
       format: "cjs",
       sourcemap: false,
-      banner: "#!/usr/bin/env node"
+      banner: "#!/usr/bin/env node",
+      inlineDynamicImports: true,
     },
     plugins: [
       resolve({
-        preferBuiltins: true
+        preferBuiltins: true,
       }),
       commonjs(),
       json(),
       terser(),
-      executable()
+      executable(),
     ],
-    external: builtins
-  }
+    preserveEntrySignatures: false,
+    external: builtins,
+  },
 ];
