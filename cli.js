@@ -36,7 +36,7 @@ program
 program.parse(argv);
 
 const run = async () => {
-  const rpc = new RPC(program.rpc);
+  const rpc = new RPC(program.rpc, {}, global.fetch);
 
   let tx;
   if (program.txHash) {
