@@ -16,10 +16,6 @@
   },
   "author": "Xuejie Xiao",
   "license": "MIT",
-  "dependencies": {
-    "node-fetch": "^3.3.2",
-    "proxy-agent": "^6.3.1"
-  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.1.0",
@@ -28,8 +24,10 @@
     "builtin-modules": "^3.3.0",
     "ckb-js-toolkit": "^0.11.0",
     "commander": "^11.1.0",
+    "node-fetch": "^3.3.2",
     "pkg": "^5.8.1",
     "prettier": "^3.1.1",
+    "proxy-agent": "^6.3.1",
     "rollup": "^2.79.1",
     "rollup-plugin-executable": "^1.6.3"
   }
