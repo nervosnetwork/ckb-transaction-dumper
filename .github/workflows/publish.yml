@@ -67,9 +67,9 @@ jobs:
       - run: npm install
       - run: npm run build
       - run: npx pkg --options "no-warnings" -t node18-win-x64 cli-dist.js -o ckb-transaction-dumper
-      - run: tar -czf ckb-transaction-dumper_v${{  github.ref_name }}_win_x86_64.tar.gz ckb-transaction-dumper README.md LICENSE
+      - run: Compress-Archive -Path ckb-transaction-dumper, README.md, LICENSE -DestinationPath ckb-transaction-dumper_v${{  github.ref_name }}_win_x86_64.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: ckb-transaction-dumper_v${{  github.ref_name }}_win_x86_64.tar.gz
+          files: ckb-transaction-dumper_v${{  github.ref_name }}_win_x86_64.zip
