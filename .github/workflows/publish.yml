@@ -1,9 +1,9 @@
-name: Node.js Package
+name: Package
 
 on:
   push:
     tags:
-      - "*.*.*"
+      - "*"
 
 jobs:
   linux-release:
