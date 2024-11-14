@@ -22,6 +22,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: ckb-transaction-dumper_v${{  github.ref_name }}_node_executable_script.tar.gz
+          token: ${{ secrets.CUSTOM_RELEASE_TOKEN }}
 
   linux-release:
     runs-on: ubuntu-latest
@@ -39,6 +40,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: ckb-transaction-dumper_v${{  github.ref_name }}_linux_x86_64.tar.gz
+          token: ${{ secrets.CUSTOM_RELEASE_TOKEN }}
 
   macos-release:
     runs-on: macos-latest
@@ -56,6 +58,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: ckb-transaction-dumper_v${{  github.ref_name }}_macos_x86_64.tar.gz
+          token: ${{ secrets.CUSTOM_RELEASE_TOKEN }}
 
   windows-release:
     runs-on: windows-2019
@@ -73,3 +76,4 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: ckb-transaction-dumper_v${{  github.ref_name }}_win_x86_64.zip
+          token: ${{ secrets.CUSTOM_RELEASE_TOKEN }}
